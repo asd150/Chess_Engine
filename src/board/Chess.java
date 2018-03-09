@@ -1,10 +1,25 @@
 package board;
 
+import java.util.Scanner;
+
+/**
+ * @author Arthkumar Desai
+ *
+ */
+
 public class Chess {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-	
+	    Board board = new Board();
+	    board.printBoard();
+
+
+       System.out.println(board.makeMove("e2","e3"));
+
+
+
+
+
 	}
 
 }
