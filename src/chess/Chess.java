@@ -1,10 +1,15 @@
-package chess;
 /**
- * 2 player Chess
  * @author Arthkumar Desai
- * @author Roman Stashchyshyn*/
+ * @author Roman Stashchyshyn
+ */
+package chess;
+
 import java.util.Scanner;
 
+/**
+ * This is where Main is located. Starts the game and takes input for the user, as
+ * well as displaying output like invalid movements
+ */
 public class Chess {
 
     public static void main(String[] args) {

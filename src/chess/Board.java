@@ -1,11 +1,14 @@
-package chess;
 /**
- * 2 player Chess
  * @author Arthkumar Desai
- * @author Roman Stashchyshyn*/
+ * @author Roman Stashchyshyn
+ */
+package chess;
 
 import java.util.ArrayList;
 
+/**
+ * Takes care of all of the functions of the board
+ */
 public class Board {
 
     private final static int length = 8;
@@ -29,8 +32,9 @@ public class Board {
     String kingPosW = "e1";
     Piece fromCheck;
 
-
-    //display the board and print it out based off of tile /piece objects
+    /**
+     * display the board and print it out based off of tile /piece objects
+     */
     public Board () {
 
         for(int i = 0; i<length; i++) {
@@ -41,35 +45,35 @@ public class Board {
                     //Rook
                     if(j==0 || j==7) {
                         Piece rook = new Rook("b");
-                        square.setSquare(rook);
+                        square.setTile(rook);
                         square.setNextMoves(j,i);
                         board[i][j]= square;
 
                         //Knight
                     }else if(j==1 || j==6) {
                         Piece knight = new Knight("b");
-                        square.setSquare(knight);
+                        square.setTile(knight);
                         square.setNextMoves(j,i);
                         board[i][j]= square;
 
                         //Bishop
                     }else if(j==2 || j==5) {
                         Piece bishop = new Bishop("b");
-                        square.setSquare(bishop);
+                        square.setTile(bishop);
                         square.setNextMoves(j,i);
                         board[i][j]= square;
 
                         //Queen
                     }else if(j==3) {
                         Piece queen = new Queen("b");
-                        square.setSquare(queen);
+                        square.setTile(queen);
                         square.setNextMoves(j,i);
                         board[i][j]= square;
 
                         //King
                     }else{
                         Piece king = new King("b");
-                        square.setSquare(king);
+                        square.setTile(king);
                         square.setNextMoves(j,i);
                         board[i][j]= square;
 
@@ -77,14 +81,14 @@ public class Board {
                     //Black pawn row
                 }else if(i == 1) {
                     Piece pawn = new Pawn("b");
-                    square.setSquare(pawn);
+                    square.setTile(pawn);
                     square.setNextMoves(j,i);
                     board[i][j]= square;
 
                     //White pawn row
                 }else if(i == 6) {
                     Piece pawn = new Pawn("w");
-                    square.setSquare(pawn);
+                    square.setTile(pawn);
                     square.setNextMoves(j,i);
                     board[i][j]= square;
 
@@ -93,35 +97,35 @@ public class Board {
                     //Rook
                     if(j==0 || j==7) {
                         Piece rook = new Rook("w");
-                        square.setSquare(rook);
+                        square.setTile(rook);
                         square.setNextMoves(j,i);
                         board[i][j]= square;
 
                         //Knight
                     }else if(j==1 || j==6) {
                         Piece knight = new Knight("w");
-                        square.setSquare(knight);
+                        square.setTile(knight);
                         square.setNextMoves(j,i);
                         board[i][j]= square;
 
                         //Bishop
                     }else if(j==2 || j==5) {
                         Piece bishop = new Bishop("w");
-                        square.setSquare(bishop);
+                        square.setTile(bishop);
                         square.setNextMoves(j,i);
                         board[i][j]= square;
 
                         //Queen
                     }else if(j==3) {
                         Piece queen = new Queen("w");
-                        square.setSquare(queen);
+                        square.setTile(queen);
                         square.setNextMoves(j,i);
                         board[i][j]= square;
 
                         //King
                     }else{
                         Piece king = new King("w");
-                        square.setSquare(king);
+                        square.setTile(king);
                         square.setNextMoves(j,i);
                         board[i][j]= square;
 
@@ -154,6 +158,14 @@ public class Board {
 
     }
 
+    /**
+     *
+     * @param from starting point
+     * @param to ending point
+     * @param whitesMove boolean if whites moves
+     * @param switchType is it pawn promotion or not
+     * @return returns a boolean which determines if the moves is valid based off of input
+     */
     public boolean createMove(String from, String to, boolean whitesMove, String switchType) {
 
         ArrayList<String> possibleMoves = null;
@@ -173,14 +185,14 @@ public class Board {
         int numCol2 = Character.getNumericValue(col2[0]) - 10;
         Piece piece = getPiece(from);
         Piece toPiece = getPiece(to);
-        board[numRow1][numCol1].setSquare(toPiece);
+        board[numRow1][numCol1].setTile(toPiece);
         board[numRow1][numCol1].setNextMoves(numCol1,numRow1);
 
 
 
         if(piece==null) {
-            board[numRow2][numCol2].setSquare(piece);
-            board[numRow1][numCol1].setSquare(toPiece);
+            board[numRow2][numCol2].setTile(piece);
+            board[numRow1][numCol1].setTile(toPiece);
             return false;
         }
 
@@ -242,11 +254,11 @@ public class Board {
                             BKingMoved = true;
                         }
                     }
-                    board[numRow1][numCol1].setSquare(piece);
+                    board[numRow1][numCol1].setTile(piece);
                     board[numRow1][numCol1].setNextMoves(numCol1,numRow1);
 
                 }else {
-                    board[numRow2][numCol2].setSquare(piece);
+                    board[numRow2][numCol2].setTile(piece);
                     if(movingKing) {
                         if(whitesMove) {
                             kingPosW = from;
@@ -261,7 +273,7 @@ public class Board {
                     }
                 }
             }else{
-                board[numRow2][numCol2].setSquare(piece);
+                board[numRow2][numCol2].setTile(piece);
                 if(movingKing) {
                     if(whitesMove) {
                         kingPosW = from;
@@ -282,16 +294,16 @@ public class Board {
             if(!to.equals(checkPos)) {
                 if(whitesMove) {
                     if(movedOutOfCheck.contains(kingPosW)) {
-                        board[numRow2][numCol2].setSquare(piece);
-                        board[numRow1][numCol1].setSquare(toPiece);
+                        board[numRow2][numCol2].setTile(piece);
+                        board[numRow1][numCol1].setTile(toPiece);
                         board[numRow1][numCol1].setNextMoves(numCol1,numRow1);
                         board[numRow2][numCol2].setNextMoves(numCol2,numRow2);
                         return false;
                     }
                 }else {
                     if(movedOutOfCheck.contains(kingPosB)) {
-                        board[numRow2][numCol2].setSquare(piece);
-                        board[numRow1][numCol1].setSquare(toPiece);
+                        board[numRow2][numCol2].setTile(piece);
+                        board[numRow1][numCol1].setTile(toPiece);
                         board[numRow1][numCol1].setNextMoves(numCol1,numRow1);
                         board[numRow2][numCol2].setNextMoves(numCol2,numRow2);
                         return false;
@@ -321,35 +333,35 @@ public class Board {
                         }
                     }
                     if(WQCastle) {
-                        board[numRow1][numCol1].setSquare(piece);
+                        board[numRow1][numCol1].setTile(piece);
                         board[numRow1][numCol1].setNextMoves(numCol1,numRow1);
                         Piece moveRook = board[7][0].getPiece();
-                        board[7][0].setSquare(null);
-                        board[7][3].setSquare(moveRook);
+                        board[7][0].setTile(null);
+                        board[7][3].setTile(moveRook);
                         WQCastle = false;
 
                     }else if(WKCastle) {
-                        board[numRow1][numCol1].setSquare(piece);
+                        board[numRow1][numCol1].setTile(piece);
                         board[numRow1][numCol1].setNextMoves(numCol1,numRow1);
                         Piece moveRook = board[7][7].getPiece();
-                        board[7][7].setSquare(null);
-                        board[7][5].setSquare(moveRook);
+                        board[7][7].setTile(null);
+                        board[7][5].setTile(moveRook);
                         WKCastle = false;
 
                     }else if(BQCastle) {
-                        board[numRow1][numCol1].setSquare(piece);
+                        board[numRow1][numCol1].setTile(piece);
                         board[numRow1][numCol1].setNextMoves(numCol1,numRow1);
                         Piece moveRook = board[0][0].getPiece();
-                        board[0][0].setSquare(null);
-                        board[0][3].setSquare(moveRook);
+                        board[0][0].setTile(null);
+                        board[0][3].setTile(moveRook);
                         BQCastle = false;
 
                     }else if(BKCastle) {
-                        board[numRow1][numCol1].setSquare(piece);
+                        board[numRow1][numCol1].setTile(piece);
                         board[numRow1][numCol1].setNextMoves(numCol1,numRow1);
                         Piece moveRook = board[7][7].getPiece();
-                        board[7][7].setSquare(null);
-                        board[7][5].setSquare(moveRook);
+                        board[7][7].setTile(null);
+                        board[7][5].setTile(moveRook);
                         BKCastle = false;
                     }
 
@@ -379,7 +391,7 @@ public class Board {
                         }
                     }
 
-                    board[numRow1][numCol1].setSquare(piece);
+                    board[numRow1][numCol1].setTile(piece);
                     board[numRow1][numCol1].setNextMoves(numCol1,numRow1);
                     newPos = board[numRow1][numCol1].getPiece();
                     possibleCheck = newPos.movePiece(board);
@@ -387,8 +399,8 @@ public class Board {
                     return true;
 
                 }else {
-                    board[numRow2][numCol2].setSquare(piece);
-                    board[numRow1][numCol1].setSquare(toPiece);
+                    board[numRow2][numCol2].setTile(piece);
+                    board[numRow1][numCol1].setTile(toPiece);
                     board[numRow1][numCol1].setNextMoves(numCol1,numRow1);
                     board[numRow2][numCol2].setNextMoves(numCol2,numRow2);
 
@@ -406,7 +418,7 @@ public class Board {
                 }
 
             }else {
-                board[numRow2][numCol2].setSquare(piece);
+                board[numRow2][numCol2].setTile(piece);
                 if(movingKing) {
                     if(whitesMove) {
                         kingPosW = from;
@@ -421,7 +433,7 @@ public class Board {
                 }
             }
         }else {
-            board[numRow2][numCol2].setSquare(piece);
+            board[numRow2][numCol2].setTile(piece);
             if(movingKing) {
                 if(whitesMove) {
                     kingPosW = from;
@@ -438,7 +450,12 @@ public class Board {
 
     }
 
-
+    /**
+     * Checks if a castle is allowed to be used
+     * @param to starting
+     * @param from ending
+     * @return boolean that makes tells us if it is or isnt valid
+     */
     public boolean castle(String to, String from) {
 
         String BQCSpot = "c8";
@@ -508,7 +525,11 @@ public class Board {
         return false;
     }
 
-
+    /**
+     * Determines if check mate is occuring
+     * @param whitesMove whites move or not
+     * @return boolean return type tells us whether it is or not
+     */
     public boolean checkMate(boolean whitesMove) {
         Piece kingTempW = new King("w");
         Piece kingTempB = new King("b");
@@ -569,14 +590,14 @@ public class Board {
                 }
             }
 
-            board[kCol][kRow].setSquare(kingTempW);
+            board[kCol][kRow].setTile(kingTempW);
             board[kCol][kRow].setNextMoves(kRow, kCol);
 
             if(kingMoves.size() == 0) {
                 for(int i = 0; i<piecesW.size(); i++) {
 
 
-                    board[kCol][kRow].setSquare(piecesW.get(i));
+                    board[kCol][kRow].setTile(piecesW.get(i));
                     board[kCol][kRow].setNextMoves(kRow,kCol);
 
                     temp = board[kCol][kRow].getPiece();
@@ -594,7 +615,7 @@ public class Board {
 
                         if(board[numRow1][numCol1].getPiece() != null) {
                             if(board[numRow1][numCol1].getPiece().getType().equals(type)) {
-                                board[kCol][kRow].setSquare(kingTempW);
+                                board[kCol][kRow].setTile(kingTempW);
                                 board[kCol][kRow].setNextMoves(kRow,kCol);
 
                                 kingCantMove = helper(type,numRow1,numCol1,kCol,kRow,whitesMove);
@@ -628,14 +649,14 @@ public class Board {
                 }
             }
 
-            board[kCol][kRow].setSquare(kingTempB);
+            board[kCol][kRow].setTile(kingTempB);
             board[kCol][kRow].setNextMoves(kRow, kCol);
 
             if(kingMoves.size() == 0) {
                 for(int i = 0; i<piecesB.size(); i++) {
 
 
-                    board[kCol][kRow].setSquare(piecesB.get(i));
+                    board[kCol][kRow].setTile(piecesB.get(i));
                     board[kCol][kRow].setNextMoves(kRow,kCol);
 
                     temp = board[kCol][kRow].getPiece();
@@ -653,7 +674,7 @@ public class Board {
 
                         if(board[numRow1][numCol1].getPiece() != null) {
                             if(board[numRow1][numCol1].getPiece().getType() == type) {
-                                board[kCol][kRow].setSquare(kingTempB);
+                                board[kCol][kRow].setTile(kingTempB);
                                 board[kCol][kRow].setNextMoves(kRow,kCol);
 
                                 kingCantMove = helper(type,numRow1,numCol1,kCol,kRow,whitesMove);
@@ -671,40 +692,56 @@ public class Board {
         return false;
     }
 
-    public String convertMove(int rowM, int columnM) {
+    /**
+     *
+     * @param initRow initial row
+     * @param initColumn initial column
+     * @return Converts the move to what the user sees/inputs in the 2D array
+     * displaying the board and returns this
+     */
+    public String convertMove(int initRow, int initColumn) {
 
-        String rtn = null;
+        String end;
         StringBuilder sb = new StringBuilder();
-        int rRow = 8 - rowM;
-        char cRow, cCol;
-        cRow = (char)rRow;
-        if(columnM == 0) {
-            cCol = 'a';
-        }else if(columnM == 1) {
-            cCol = 'b';
-        }else if(columnM == 2) {
-            cCol = 'c';
-        }else if(columnM == 3) {
-            cCol = 'd';
-        }else if(columnM == 4) {
-            cCol = 'e';
-        }else if(columnM == 5) {
-            cCol = 'f';
-        }else if(columnM == 6) {
-            cCol = 'g';
+        int endRow = 8 - initRow;
+        char endColumn;
+        if(initColumn == 0) {
+            endColumn = 'a';
+        }else if(initColumn == 1) {
+            endColumn = 'b';
+        }else if(initColumn == 2) {
+            endColumn = 'c';
+        }else if(initColumn == 3) {
+            endColumn = 'd';
+        }else if(initColumn == 4) {
+            endColumn = 'e';
+        }else if(initColumn == 5) {
+            endColumn = 'f';
+        }else if(initColumn == 6) {
+            endColumn = 'g';
         }else{
-            cCol = 'h';
+            endColumn = 'h';
         }
 
-        sb.append(cCol);
-        sb.append(rRow);
-        rtn = sb.toString();
+        sb.append(endColumn);
+        sb.append(endRow);
+        end = sb.toString();
 
-
-        return rtn;
+        //System.out.println(end);
+        return end;
     }
 
-    //helper for checking if in check
+    /**This is a helper for the check mate that returns whether a king
+     * can be protected/defended
+     *
+     * @param type the type of the piece
+     * @param row row of piece
+     * @param col column of piece
+     * @param kingRow where the king is
+     * @param kingCol same as above except column
+     * @param whitesMove is it whitesmoves?
+     * @return
+     */
     public boolean helper(String type, int row, int col,int kingRow, int kingCol, boolean whitesMove) {
 
         ArrayList<String> indPotentialMoves = null;
@@ -747,7 +784,7 @@ public class Board {
             for(int j = 0; j<8; j++) {
                 if(whitesMove) {
                     if(board[i][j].getPiece() != null) {
-                        if(board[i][j].getPiece().getTeam() == "w" && board[i][j].getPiece().getType() != "K") {
+                        if(board[i][j].getPiece().getTeam().equals("w") && board[i][j].getPiece().getType() != "K") {
                             indPotentialMoves = board[i][j].getPiece().movePiece(board);
                             for(int k = 0; k < indPotentialMoves.size(); k++) {
                                 potentialMoves.add(indPotentialMoves.get(k));
@@ -756,7 +793,7 @@ public class Board {
                     }
                 }else {
                     if(board[i][j].getPiece() != null) {
-                        if(board[i][j].getPiece().getTeam() == "b" && board[i][j].getPiece().getType() != "K") {
+                        if(board[i][j].getPiece().getTeam().equals("b") && board[i][j].getPiece().getType() != "K") {
                             indPotentialMoves = board[i][j].getPiece().movePiece(board);
                             for(int k = 0; k < indPotentialMoves.size(); k++) {
                                 potentialMoves.add(indPotentialMoves.get(k));
@@ -959,7 +996,13 @@ public class Board {
         return false;
     }
 
-
+    /**Checks to see if a move is going to put the King into check
+     *
+     * @param row row of the movement
+     * @param col column of the movement
+     * @param whitesMoves is it whites moves?
+     * @return boolean
+     */
     public boolean intoCheck(int row, int col, boolean whitesMoves) {
 
         ArrayList<String> individualPos = null;
@@ -995,7 +1038,7 @@ public class Board {
 
         if(whitesMoves) {
 
-            board[row][col].setSquare(dummyTempW);
+            board[row][col].setTile(dummyTempW);
             board[row][col].setNextMoves(row,col);
 
 
@@ -1008,7 +1051,7 @@ public class Board {
             for(int i = 0; i<piecesW.size(); i++) {
 
 
-                board[kCol][kRow].setSquare(piecesW.get(i));
+                board[kCol][kRow].setTile(piecesW.get(i));
                 board[kCol][kRow].setNextMoves(kRow,kCol);
 
                 temp = board[kCol][kRow].getPiece();
@@ -1026,19 +1069,19 @@ public class Board {
 
                     if(board[numRow1][numCol1].getPiece() != null) {
                         if(board[numRow1][numCol1].getPiece().getType().equals(type)) {
-                            board[kCol][kRow].setSquare(kingTempW);
+                            board[kCol][kRow].setTile(kingTempW);
                             board[kCol][kRow].setNextMoves(kRow,kCol);
                             return true;
                         }
                     }
 
                 }
-                board[row][col].setSquare(null);
+                board[row][col].setTile(null);
                 individualPos = null;
             }
         }else {
 
-            board[row][col].setSquare(dummyTempB);
+            board[row][col].setTile(dummyTempB);
             board[row][col].setNextMoves(row,col);
 
 
@@ -1051,7 +1094,7 @@ public class Board {
             for(int i = 0; i<piecesB.size(); i++) {
 
 
-                board[kCol][kRow].setSquare(piecesB.get(i));
+                board[kCol][kRow].setTile(piecesB.get(i));
                 board[kCol][kRow].setNextMoves(kRow,kCol);
 
                 temp = board[kCol][kRow].getPiece();
@@ -1068,14 +1111,14 @@ public class Board {
 
                     if(board[numRow1][numCol1].getPiece() != null) {
                         if(board[numRow1][numCol1].getPiece().getType().equals(type)) {
-                            board[kCol][kRow].setSquare(kingTempB);
+                            board[kCol][kRow].setTile(kingTempB);
                             board[kCol][kRow].setNextMoves(kRow,kCol);
                             return true;
                         }
                     }
 
                 }
-                board[row][col].setSquare(null);
+                board[row][col].setTile(null);
                 individualPos = null;
             }
         }
@@ -1084,7 +1127,12 @@ public class Board {
 
     }
 
-
+    /**
+     * Determines if actually in check
+     * @param moves the movements on the board
+     * @param posOfCheck piece that is put into the position of Check
+     * @param whitesMove is it whites move?
+     */
     public void inCheck(ArrayList<String> moves, Piece posOfCheck, boolean whitesMove) {
 
 
@@ -1113,20 +1161,28 @@ public class Board {
 
     }
 
-    public Piece getPiece(String loc) {
+    /**Getter for the piece in a certain position
+     *
+     * @param location - location of the piece
+     * @return the piece inside of the tile
+     */
+    public Piece getPiece(String location) {
 
         Piece rtn = null;
-        char[] col = loc.substring(0,1).toCharArray();
-        String row = loc.substring(1);
+        char[] col = location.substring(0,1).toCharArray();
+        String row = location.substring(1);
         int numRow = Math.abs(Integer.parseInt(row) - 8);
         int numCol = Character.getNumericValue(col[0]) - 10;
         rtn = board[numRow][numCol].getPiece();
-        board[numRow][numCol].setSquare(null);;
+        board[numRow][numCol].setTile(null);;
 
 
         return rtn;
     }
 
+    /**
+     * Prints board with rows and column as given and all objects in it as they stand
+     */
     public void printBoard() {
         char[] row = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
         char[] column = {'8', '7', '6', '5', '4', '3', '2', '1'};

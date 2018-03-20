@@ -1,13 +1,14 @@
 package chess;
 /**
- * 2 player Chess
+ * @author Roman Stashchyshyn
  * @author Arthkumar Desai
- * @author Roman Stashchyshyn*/
-
+ */
 
 import java.util.ArrayList;
 
-
+/**
+ * Knight class for movement of Knight piece. Extends Piece
+ */
 public class Knight extends Piece{
 
     public Knight(String team) {
@@ -16,7 +17,11 @@ public class Knight extends Piece{
 
     }
 
-
+    /**
+     *
+     * @param board
+     * @return moves - Returns the possible moves/ moves with kills for knight pieces
+     */
     public ArrayList<String> movePiece(Tile[][] board) {
 
 
